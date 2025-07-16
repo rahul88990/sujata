@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>সুজাতা AI</title>
+  <style>
+    body { background: #121212; color: #fff; font-family: sans-serif; padding: 20px; }
+    .chat-box { max-width: 600px; margin: auto; }
+    .message { background: #1e1e1e; padding: 10px; margin: 10px 0; border-radius: 10px; }
+    input, button { padding: 10px; font-size: 16px; }
+    #reply { color: #7be87b; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="chat-box">
+    <h2>সুজাতা AI</h2>
+    <input id="msg" type="text" placeholder="প্রশ্ন লিখো..." />
+    <button onclick="send()">পাঠাও</button>
+    <div id="reply"></div>
+  </div>
+
+  <script>
+    async function send() {
+      const msg = document.getElementById('msg').value;
+      const res = await fetch('/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `message=${encodeURIComponent(msg)}`
+      });
+      const data = await res.json();
+      document.getElementById('reply').innerText = data.reply;
+    }
+  </script>
+</body>
+</html>
